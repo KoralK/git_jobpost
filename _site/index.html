@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .job-listing {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .job-listing h2 {
+            color: #005a9c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Job Search API</h1>
+    <form id="searchForm">
+        <input type="text" id="keywords" placeholder="Enter keywords (e.g., engineer, developer)" required>
+        <button type="submit">Search Jobs</button>
+    </form>
+    <div id="job-list"></div>
+
+    <script>
+        async function searchJobs(event) {
+            event.preventDefault();
+            const keywords = document.getElementById("keywords").value;
+            const response = await fetch('https://us-central1-vocal-park-418014.cloudfunctions.net/job_search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ keywords: keywords })
+            });
+
+            const data = await response.json();
+            displayJobs(data.jobs);
+        }
+
+        function displayJobs(jobs) {
+            const jobList = document.getElementById("job-list");
+            jobList.innerHTML = '';
+
+            if (jobs.length === 0) {
+                jobList.innerHTML = '<p>No jobs found matching the criteria.</p>';
+                return;
+            }
+
+            jobs.forEach(job => {
+                const jobInfo = job['MatchedObjectDescriptor'];
+                const jobItem = `
+                    <div class="job-listing">
+                        <h2>${jobInfo["PositionTitle"]}</h2>
+                        <p><strong>Organization:</strong> ${jobInfo["OrganizationName"]}</p>
+                        <p><strong>Location:</strong> ${jobInfo["PositionLocation"].map(loc => loc["LocationName"]).join(', ')}</p>
+                        <p><strong>Open to:</strong> ${jobInfo["UserArea"]["Details"]["WhoMayApply"]["Name"]}</p>
+                        <a href="${jobInfo["PositionURI"]}" target="_blank">View Job Posting</a>
+                    </div>
+                `;
+                jobList.innerHTML += jobItem;
+            });
+        }
+
+        document.getElementById("searchForm").addEventListener("submit", searchJobs);
+    </script>
+</body>
+</html>
