@@ -3,7 +3,7 @@ description: > # this means to ignore newlines until "baseurl:"
   This site is under development. 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://koralk.github.io/git_jobpost/" # the base hostname & protocol for your site
-theme: modernist
+theme: jekyll-theme-minimal
 show_downloads: true
 # To use a remote theme, uncomment the next line and comment out the above theme line
 # remote_theme: owner/name
