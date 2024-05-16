@@ -1,0 +1,35 @@
+# .gcloudignore
+# This file specifies files and directories that will not be uploaded to
+# Google Cloud Platform when deploying using gcloud.
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment directory
+env/
+venv/
+
+# Other files and directories to ignore
+.DS_Store
+*.log
+*.gz
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+node_modules/
+dist/
+build/
+.coverage
+*.egg-info/
+.Python
+pip-log.txt
+.tox/
+.scoverage/
+.cache/
+.gradle/
+.vscode/
+.idea/
