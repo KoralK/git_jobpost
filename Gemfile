@@ -6,3 +6,4 @@ gem 'jekyll-theme-minimal'
 gem 'csv'
 gem 'base64'
 gem 'bigdecimal'
+gem 'jekyll-remote-theme'  # Add this line
